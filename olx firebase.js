@@ -150,11 +150,13 @@ async function checkChatroom(adUserId) {
   return room
 }
 
+const today_date = new Date();
 function createChatroom(adUserId, adSellerEmail) {
   const currentUserId = auth.currentUser.uid
   console.log(` At Creating Chatroom: \n 
   The current_User_Id is --> ${currentUserId} and 
   \n  Ad_Seller_Id is --> ${adUserId}`);
+  
 
   const obj =  {
       users: { 
@@ -165,7 +167,7 @@ function createChatroom(adUserId, adSellerEmail) {
         Current_User_Email: auth.currentUser.email,
         Ad_Owner_Email: adSellerEmail
       },
-      createdAt: new Date().toLocaleDateString,
+      createdAt:`${today_date.getHours()}:${today_date.getMinutes}`,
       lastMessage:{}
   } 
   return addDoc(collection(db, "chatrooms"), obj)
@@ -175,7 +177,9 @@ function createChatroom(adUserId, adSellerEmail) {
 // Now addig messages to the chatrooms:
 function sendMessageToDb(text,chat_id)
 {
-  const message = {text,createdAt:Date.now(),userId:auth.currentUser.uid };
+  const message = {text,
+    createdAt:`${today_date.getHours()}:${today_date.getMinutes}`,
+    userId:auth.currentUser.uid };
   // const messageRef = db.collection("chatrooms").doc(chat_id).collection("messages").add(message);
   // return messageRef;
 

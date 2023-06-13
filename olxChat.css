@@ -72,25 +72,6 @@
     font-size: 12px;
 }
 
-#msg {
-    width: 250px;
-    height: 50px;
-    color: blue;
-    border: 2px solid dodgerblue;
-    font-size: 25px;
-    border-radius: 10px;
-    background-color: white;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-#msg:hover {
-    color: black;
-    border: 2px solid black;
-    font-size: 20px;
-    background-color: white;
-
-}
 
 a {
     text-align: center;
@@ -99,8 +80,9 @@ a {
 #message_div {
     display: block;
     width: 100vw;
-    height: max-content;
-    background-image: url("https://pbs.twimg.com/media/C95w6LCXkAA65Ws.jpg");
+    height: 100vh;
+    /* background-image: url("https://pbs.twimg.com/media/C95w6LCXkAA65Ws.jpg"); */
+    background-image: url("https://wallpapercave.com/wp/wp6559609.jpg");
 
 }
 
@@ -111,7 +93,7 @@ a {
     position: relative;
     float: left;
     padding: 9px;
-    background-color: whitesmoke;
+    background-color: #075e54;
     max-width: 50%;
     word-wrap: break-word;
     text-align: left;
@@ -120,25 +102,25 @@ a {
     border-radius: 10px;
 }
 
-.message-blue:after {
+.message-buyer:after {
     content: "";
     position: absolute;
     width: 0;
     height: 0;
-    border-top: 15px solid #9e9e9d;
+    border-top: 15px solid #075e54;
     border-left: 15px solid transparent;
     top: 0px;
     left: -6px;
 }
 
 
-.message-orange {
+.message-seller {
     display: grid;
     margin: 10px 10px 10px 67%;
     position: relative;
     float: right;
     padding: 9px;
-    background-color: #e6e4dd;
+    background-color: #128c7e;
     max-width: 50%;
     word-wrap: break-word;
     text-align: right;
@@ -146,12 +128,12 @@ a {
     border-radius: 10px;
 }
 
-.message-orange:after {
+.message-seller:after {
     content: "";
     position: absolute;
     width: 0;
     height: 0;
-    border-top: 15px solid #f8e896;
+    border-top: 15px solid #128c7e;
     border-right: 15px solid transparent;
     top: 0px;
     right: -6px;

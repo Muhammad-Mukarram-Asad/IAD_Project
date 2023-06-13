@@ -75,36 +75,36 @@
         }
 
         //  window.getMessage = async function()
-        {
-            const msgElem = document.getElementById('message_div')
+        // {
+        //     const msgElem = document.getElementById('message_div')
 
-            try {
-                let all_messages = await getMessagesFromDb(chatroom_id);
-                for (let element of all_messages) {
-                    if (element.userId == auth.currentUser.uid) {
-                        msgElem.innerHTML += `
-                        <div id="buyer_msg_div">
-                            <label> Message Buyer Id </label> <br>
-                            <h3>${element.userId} </h3> <br>
-                            <label> Message Text </label> <br>
-                            <h3>${element.text}</h3> <br> <br>
-                        `
-                    }
-                    else {
-                        msgElem.innerHTML += `
-                        <div id="sender_msg_div">
-                            <label> Message Sender Id </label> <br>
-                            <h3>${element.userId} </h3> <br>
-                            <label> Message Text </label> <br>
-                            <h3>${element.text}</h3> <br> <br>
-                        `
-                    }
-                }
-            }
-            catch (e) {
-                console.log(" An error occurred in getting the messages --> " + e.message);
-            }
-        }
+        //     try {
+        //         let all_messages = await getMessagesFromDb(chatroom_id);
+        //         for (let element of all_messages) {
+        //             if (element.userId == auth.currentUser.uid) {
+        //                 msgElem.innerHTML += `
+        //                 <div id="buyer_msg_div">
+        //                     <label> Message Buyer Id </label> <br>
+        //                     <h3>${element.userId} </h3> <br>
+        //                     <label> Message Text </label> <br>
+        //                     <h3>${element.text}</h3> <br> <br>
+        //                 `
+        //             }
+        //             else {
+        //                 msgElem.innerHTML += `
+        //                 <div id="sender_msg_div">
+        //                     <label> Message Sender Id </label> <br>
+        //                     <h3>${element.userId} </h3> <br>
+        //                     <label> Message Text </label> <br>
+        //                     <h3>${element.text}</h3> <br> <br>
+        //                 `
+        //             }
+        //         }
+        //     }
+        //     catch (e) {
+        //         console.log(" An error occurred in getting the messages --> " + e.message);
+        //     }
+        // }
 
         realTime()
         function realTime() {
@@ -123,17 +123,17 @@
                     console.log("auth.currentUser.uid --> ", auth.currentUser.uid);
 
                     if (item.userId == auth.currentUser.uid) {
-                        color = "orange"
+                        color = "seller"
                         console.log("auth.currentUser.uid", item.userId)
                     } else {
-                        color = "blue"
+                        color = "buyer"
                         console.log(auth.currentUser.uid)
                     }
 
                     adsElem.innerHTML += `
                     <div class="message-${color}">
                         <span id="msg_text">${item.text}</span>
-                        <span id="time">  ${new Date(item.createdAt).toLocaleTimeString()}</span>
+                        <span id="time">  ${item.createdAt}</span>
                     </div>`
                 }
 

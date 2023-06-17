@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details </title>
+    <link rel="stylesheet" href="details.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1> For viewing the complete product details:</h1>
+        <button id="btn" onclick="getAdDetails()"> Click Here</button>
+        <div id="creative_div"></div>
+    </div>
+
+    <div class="contact_div">
+        <button id="msg" onclick="initiateChat()">Contact Seller</button>
+        <button id="msg_a"><a href="index.html"> Home Page Button</a></button>
+    </div>
+
+
+
+    <!-- Javascript code starts from here onwards: -->
+
+
+    <script type="module">
+        import { checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
+
+        let data;
+        let Ad_seller_id;
+        let Ad_seller_email;
+
+
+        window.getAdDetails = async function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id')
+
+            //getFirebaseAd(id)
+            console.log('ad id ===>', id)
+            const doc = await getFirebaseAd(id)
+            data = doc.data()
+            Ad_seller_id = data.userId;
+            Ad_seller_email = data.userEmail;
+            var div = document.getElementById('creative_div');
+
+            div.innerHTML += `<div id="inner_div">
+        <img onclick="remove_login()" id="cross_sign_2" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8KRxxoOlx_uDpp97M_ZwdyyEvW0rk1VdLv-MwwSY&s" alt="cross_img">
+
+                   
+
+                    <label>The image of the Ad is given below: </label>
+                    <img id="inner_div_img" src=${data.imageURL}>
+
+                    <label>The Title of the Ad is given below: </label>
+                    <p id="inner_div_p">${data.title}</p>
+
+                    <label>The Description of the Ad is given below: </label>
+                    <p id="inner_div_p">${data.description}</p>
+
+                    <label>The Price of the Ad is given below: </label>
+                    <p id="inner_div_p">${data.price}</p>
+
+                    <label>The location of the Ad is given below: </label>
+                    <p id="inner_div_p">${data.location}</p>
+
+                    <label>Owner's contact number is given below: </label>
+                    <p id="inner_div_p">${data.contact_number}</p>
+
+                    <label>Owner's Id is given below: </label>
+                    <p id="inner_div_p">${data.userId}</p>
+
+                    <label>Owner's Email is given below: </label>
+                    <p id="inner_div_p">${data.userEmail}</p>
+
+
+                    </div>`
+        }
+
+        window.remove_login = function () {
+            let login_container = document.getElementById("inner_div");
+            login_container.style.display = "none";
+        };
+
+        // Function for creating room for chatting b/w seller and the buyer.
+
+        window.initiateChat = async function () {
+            console.log('Ad_Id ===>', Ad_seller_id)
+            //1. check if chatroom exists
+            let chatroom = await checkChatroom(Ad_seller_id)
+
+            //2. if not exists then create it
+            if (!chatroom) {
+                chatroom = await createChatroom(Ad_seller_id, Ad_seller_email)
+                alert(`chatroom created successfully.`);
+            }
+            else {
+                alert('chatroom already exists b/w the seller and buyer.')
+            }
+            const chatId = chatroom.id;
+
+            location.href = `chat.html?id=${chatId}`;
+        }
+
+    </script>
+
+    <!-- 
+1. Install nodejs from website
+2. Verify using node -v and npm -v in CMD
+3. npm install -g firebase-tools
+4. Open cmd inside project's folder
+5. firebase login
+6. firebase init
+7. move all the relevant HTML, CSS, JS & Media files
+into public folder
+8. firebase deploy -->
+
+</body>
+
+</html>

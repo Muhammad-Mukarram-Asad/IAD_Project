@@ -116,6 +116,20 @@ function getFirebaseAd(id) {
   return getDoc(docRef)
 }
 
+// Creating a method or function for obtaining Ad details when user clicked on it.
+// async function clickedAdFromDB(title)
+// {
+  
+// const q = query(collection(db, "ads"), where("title", "==", title));
+
+// const querySnapshot = await getDocs(q);
+// let ad_array = [];
+// querySnapshot.forEach((doc) => {
+//   console.log(doc.id, " => ", doc.data());
+//   ad_array.push({ id: doc.id, ...doc.data() })
+// })
+// return ad_array;
+// };
 
 async function checkChatroom(adUserId) {
   const currentUserId = auth.currentUser.uid
@@ -173,6 +187,17 @@ function sendMessageToDb(text,chat_id)
   return addDoc(collection(db,"chatrooms", chat_id, "messages"), message);
 }
 
+// async function getMessagesFromDb(chat_id)
+// {
+//   const querySnapshot = await getDocs(collection(db, "chatrooms",chat_id, "messages"));
+//   const messages = [];
+//   querySnapshot.forEach((doc) => {
+//     messages.push({ id: doc.id, ...doc.data() });
+//   });
+
+//   return messages;
+// }
+
 function getRealtimeMessages(roomId, callback) {
   
 console.log(`chat firebase.`);
@@ -187,6 +212,20 @@ console.log(`chat firebase.`);
   })
 
 }
+
+// function getRealtimeMessages(callback, chat_id) {
+//   //2
+//   onSnapshot(collection(db, "chatrooms",chat_id,"messages"), (querySnapshot) => {
+//       const messages = []
+
+//       querySnapshot.forEach((doc) => {
+//           messages.push({ id: doc.id, ...doc.data() })
+//       });
+//       //3
+//       callback(messages,chat_id)
+//   })
+// }
+
 export {auth, signUpFirebase, signInFirebase, uploadImage, getAdsFromDb, postAdToDb,getRealtimeAds,
   getFirebaseAd, createChatroom,checkChatroom,sendMessageToDb,getRealtimeMessages};
 

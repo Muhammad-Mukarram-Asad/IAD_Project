@@ -17,8 +17,7 @@ window.signUp = function () {
     {
       alert("The user is registered successfully.");
     }
-    (name = ""), (email = ""), (password = "");
-    age = "";
+    (name = ""), (email = ""), (password = ""), (age = "");
   } catch (e) {
     const error_msg = document.getElementById("error");
     error_msg.innerHTML = e.message;

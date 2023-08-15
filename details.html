@@ -7,19 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details </title>
     <link rel="stylesheet" href="details.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
-    <div class="container">
-        <h1> For viewing the complete product details:</h1>
+    <section class="container">
+        <div class="heading_div">
+            <a href="index.html">
+            <img src="https://www.svgrepo.com/show/238568/back-arrow-previous.svg" alt="back_arrow" />
+        </a>
+            <h1> Product Details:</h1>
+            <img id="forward_icon"
+                src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3204758/arrow-forward-circle-icon-md.png"
+                alt="forward_arrow" />
+        </div>
+
         <button id="btn" onclick="getAdDetails()"> Click Here</button>
         <div id="creative_div"></div>
-    </div>
+    </section>
 
-    <div class="contact_div">
-        <button id="msg" onclick="initiateChat()">Contact Seller</button>
-        <button id="msg_a"><a href="index.html"> Home Page Button</a></button>
-    </div>
+    <section class="contact_div">
+        <button id="contact_btn" onclick="initiateChat()">Contact Seller</button>
+
+    </section>
 
 
 
@@ -47,37 +59,35 @@
             var div = document.getElementById('creative_div');
 
             div.innerHTML += `<div id="inner_div">
-        <img onclick="remove_login()" id="cross_sign_2" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8KRxxoOlx_uDpp97M_ZwdyyEvW0rk1VdLv-MwwSY&s" alt="cross_img">
+                <img onclick="remove_login()" id="cross_sign_2" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8KRxxoOlx_uDpp97M_ZwdyyEvW0rk1VdLv-MwwSY&s" alt="cross_img">
 
-                   
+                <label>The image of the Ad is given below: </label>
+                <img id="inner_div_img" src=${data.imageURL}>
 
-                    <label>The image of the Ad is given below: </label>
-                    <img id="inner_div_img" src=${data.imageURL}>
+                <label>The Title of the Ad is given below: </label>
+                <p id="inner_div_p">${data.title}</p>
 
-                    <label>The Title of the Ad is given below: </label>
-                    <p id="inner_div_p">${data.title}</p>
+                <label>The Description of the Ad is given below: </label>
+                <p id="inner_div_p">${data.description}</p>
 
-                    <label>The Description of the Ad is given below: </label>
-                    <p id="inner_div_p">${data.description}</p>
+                <label>The Price of the Ad is given below: </label>
+                <p id="inner_div_p">${data.price}</p>
 
-                    <label>The Price of the Ad is given below: </label>
-                    <p id="inner_div_p">${data.price}</p>
+                <label>The location of the Ad is given below: </label>
+                <p id="inner_div_p">${data.location}</p>
 
-                    <label>The location of the Ad is given below: </label>
-                    <p id="inner_div_p">${data.location}</p>
+                <label>Owner's contact number is given below: </label>
+                <p id="inner_div_p">${data.contact_number}</p>
 
-                    <label>Owner's contact number is given below: </label>
-                    <p id="inner_div_p">${data.contact_number}</p>
+                <label>Owner's Id is given below: </label>
+                <p id="inner_div_p">${data.userId}</p>
 
-                    <label>Owner's Id is given below: </label>
-                    <p id="inner_div_p">${data.userId}</p>
-
-                    <label>Owner's Email is given below: </label>
-                    <p id="inner_div_p">${data.userEmail}</p>
+                <label>Owner's Email is given below: </label>
+                <p id="inner_div_p">${data.userEmail}</p>
 
 
-                    </div>`
-        }
+                </div>`
+    }
 
         window.remove_login = function () {
             let login_container = document.getElementById("inner_div");
@@ -94,10 +104,16 @@
             //2. if not exists then create it
             if (!chatroom) {
                 chatroom = await createChatroom(Ad_seller_id, Ad_seller_email)
-                alert(`chatroom created successfully.`);
+                // alert(`chatroom created successfully.`);
+                swal("Finally Done", "Chatroom created successfully", "success", {
+                    button: "Aww Yiss"
+                });
             }
             else {
-                alert('chatroom already exists b/w the seller and buyer.')
+                // alert('chatroom already exists b/w the seller and buyer.')
+                swal("Wao", "Chatroom already exists", "success", {
+                    button: "That's Great"
+                });
             }
             const chatId = chatroom.id;
 

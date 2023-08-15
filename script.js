@@ -94,7 +94,7 @@ function getAds() {
 
              <div class="ads_styling_inner_price_div">
              <h2> Rs ${item.price} </h2>
-             <img id="heart_img" onclick="changeImage()" src=${"https://i.pinimg.com/originals/a4/d7/d0/a4d7d0f5f3b6ed7e94cc9d7cc9b8788a.gif"} alt="heart_image"  />
+             <img class="heart_image" onclick="changeImage()" src=${"https://i.pinimg.com/originals/a4/d7/d0/a4d7d0f5f3b6ed7e94cc9d7cc9b8788a.gif"} alt="heart_image"  />
              </div>
 
              <h2>${item.title} </h2>
@@ -108,16 +108,26 @@ function getAds() {
 
 window.changeImage =  function()
 {
-  let image = document.getElementById("heart_img");
-  if(image.src === "https://i.pinimg.com/originals/a4/d7/d0/a4d7d0f5f3b6ed7e94cc9d7cc9b8788a.gif")
-  {
-    image.src = "https://cdn-icons-png.flaticon.com/512/56/56986.png";
-  }
-  else
-  {
-    image.src = "https://i.pinimg.com/originals/a4/d7/d0/a4d7d0f5f3b6ed7e94cc9d7cc9b8788a.gif";
-  }
+  let heartImages = document.querySelectorAll(".heart_image");
+  var source1 = "https://i.pinimg.com/originals/a4/d7/d0/a4d7d0f5f3b6ed7e94cc9d7cc9b8788a.gif";
+    var source2 = "https://cdn-icons-png.flaticon.com/512/56/56986.png";
+
+    // Add a click event listener to each heart image
+    heartImages.forEach(function(image) {
+        image.addEventListener("click", function() {
+            // Get the current source of the clicked image
+            var currentSource = this.getAttribute("src");
+            
+            // Toggle the source based on the current source
+            if (currentSource === source1) {
+                this.setAttribute("src", source2);
+            } else {
+                this.setAttribute("src", source1);
+            }
+        });
+    });
 }
+
 
 window.goToDetail = async function (id) {
   location.href = `details.html?id=${id}`;
@@ -157,3 +167,18 @@ window.remove_login = function () {
   login_container2.style.display = "none";
   login_container.style.display = "none";
 };
+
+window.openHiddenDivs = function() {
+  let sec2_container = document.getElementById("sec2_container");
+  let selectCity = document.getElementById("sec2_part1_p");
+  if(sec2_container.style.display == "none")
+  {
+    sec2_container.style.display = "block"
+  }
+
+  else{
+    sec2_container.style.display = "none"
+  }
+
+  selectCity.innerHTML = "Select Your Location:";
+}

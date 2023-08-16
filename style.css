@@ -166,7 +166,7 @@ footer {
 
 .first-container {
   background-color: #f7f8f8;
-  margin-top: -12px;
+  margin-top: 0;
 }
 
 .sec-1{
@@ -205,7 +205,15 @@ footer {
 
 /* ......................First Div --> sec2 css starts from here onwards................ */
 
-.sec2_container {
+.sec-2{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100vw;
+  height: auto;
+}
+
+#sec2_container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

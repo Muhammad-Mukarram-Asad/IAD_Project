@@ -14,10 +14,19 @@ window.signUp = function () {
 
   try {
     signUpFirebase({ email, password, name, age });
-    {
-      alert("The user is registered successfully.");
-    }
-    (name = ""), (email = ""), (password = ""), (age = "");
+
+    swal({
+      title: "Bravo!",
+      text: "User Registered Successfully",
+      icon: "success",
+      button: "Okay",
+    });
+
+   // Clear input fields
+   document.getElementById("name").value = "";
+   document.getElementById("email").value = "";
+   document.getElementById("password").value = "";
+   document.getElementById("age").value = "";
   } catch (e) {
     const error_msg = document.getElementById("error");
     error_msg.innerHTML = e.message;
@@ -31,9 +40,16 @@ window.logIn = async function () {
     let userCredential = await signInFirebase(email.value, password.value);
 
     {
-      alert(
-        "Successfully signed in with the Id --> " + userCredential.user.uid
-      );
+      // alert(
+      //   "Successfully signed in with the Id --> " + userCredential.user.uid
+      // );
+
+      swal({
+        title: "Good Job!",
+        text: `User SignedIn with the Id = ${userCredential.user.uid}`,
+        icon: "success",
+        button: "okay",
+      });
     }
   } catch (e) {
     const error_msg = document.getElementById("error");
@@ -64,11 +80,27 @@ window.show_Ad = async function () {
       contact_number.value
     );
     {
-      alert("Post is live now and also stored in database.");
+      // alert("Post is live now and also stored in database.");
+
+      swal({
+        title: "Excellent",
+        text: "Your Product Ad is Live Now",
+        icon: "success",
+        buttons: ["oh no!", "oh yes!"],
+      });
     }
-  } catch (e) {
-    alert("An error occurred in posting an Ad -->\n " + e.message);
+  } 
+  
+  catch (e) {
+    // alert("An error occurred in posting an Ad -->\n " + e.message);
+    swal({
+      title: "Oops",
+      text: `Error occurred in posting an Ad \n ${e.message}`,
+      icon: "error",
+      button: "oh no!",
+    });
   }
+
   title_input.value = "";
   price_input.value = "";
   des_input.value = "";
@@ -87,7 +119,7 @@ function getAds() {
     adsElem.innerHTML = "";
     for (let item of ads) {
       adsElem.innerHTML += `
-          <div class="ads_styling_main_div">
+          <div class="ads_styling_main_div" onclick="goToDetail('${item.id}')">
              <img src=${item.imageURL} alt="product_image">
 
              <div class="ads_styling_inner_div">
@@ -106,28 +138,27 @@ function getAds() {
   });
 }
 
-window.changeImage =  function()
-{
+window.changeImage = function () {
   let heartImages = document.querySelectorAll(".heart_image");
-  var source1 = "https://i.pinimg.com/originals/a4/d7/d0/a4d7d0f5f3b6ed7e94cc9d7cc9b8788a.gif";
-    var source2 = "https://cdn-icons-png.flaticon.com/512/56/56986.png";
+  var source1 =
+    "https://i.pinimg.com/originals/a4/d7/d0/a4d7d0f5f3b6ed7e94cc9d7cc9b8788a.gif";
+  var source2 = "https://cdn-icons-png.flaticon.com/512/56/56986.png";
 
-    // Add a click event listener to each heart image
-    heartImages.forEach(function(image) {
-        image.addEventListener("click", function() {
-            // Get the current source of the clicked image
-            var currentSource = this.getAttribute("src");
-            
-            // Toggle the source based on the current source
-            if (currentSource === source1) {
-                this.setAttribute("src", source2);
-            } else {
-                this.setAttribute("src", source1);
-            }
-        });
+  // Add a click event listener to each heart image
+  heartImages.forEach(function (image) {
+    image.addEventListener("click", function () {
+      // Get the current source of the clicked image
+      var currentSource = this.getAttribute("src");
+
+      // Toggle the source based on the current source
+      if (currentSource === source1) {
+        this.setAttribute("src", source2);
+      } else {
+        this.setAttribute("src", source1);
+      }
     });
-}
-
+  });
+};
 
 window.goToDetail = async function (id) {
   location.href = `details.html?id=${id}`;
@@ -168,17 +199,14 @@ window.remove_login = function () {
   login_container.style.display = "none";
 };
 
-window.openHiddenDivs = function() {
+window.openHiddenDivs = function () {
   let sec2_container = document.getElementById("sec2_container");
   let selectCity = document.getElementById("sec2_part1_p");
-  if(sec2_container.style.display == "none")
-  {
-    sec2_container.style.display = "block"
-  }
-
-  else{
-    sec2_container.style.display = "none"
+  if (sec2_container.style.display == "none") {
+    sec2_container.style.display = "block";
+  } else {
+    sec2_container.style.display = "none";
   }
 
   selectCity.innerHTML = "Select Your Location:";
-}
+};

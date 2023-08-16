@@ -39,12 +39,12 @@
 
 
     <script type="module">
-        import { checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
+        import {auth, checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
 
         let data;
         let Ad_seller_id;
         let Ad_seller_email;
-
+        
 
         window.getAdDetails = async function () {
             const urlParams = new URLSearchParams(window.location.search);
@@ -56,6 +56,7 @@
             data = doc.data()
             Ad_seller_id = data.userId;
             Ad_seller_email = data.userEmail;
+            
             var div = document.getElementById('creative_div');
 
             div.innerHTML += `<div id="inner_div">
@@ -97,27 +98,26 @@
         // Function for creating room for chatting b/w seller and the buyer.
 
         window.initiateChat = async function () {
-            console.log('Ad_Id ===>', Ad_seller_id)
+            console.log('Ad_Seller_Id ===>', Ad_seller_id)
             //1. check if chatroom exists
             let chatroom = await checkChatroom(Ad_seller_id)
 
             //2. if not exists then create it
             if (!chatroom) {
                 chatroom = await createChatroom(Ad_seller_id, Ad_seller_email)
-                // alert(`chatroom created successfully.`);
                 swal("Finally Done", "Chatroom created successfully", "success", {
                     button: "Aww Yiss"
                 });
             }
             else {
-                // alert('chatroom already exists b/w the seller and buyer.')
                 swal("Wao", "Chatroom already exists", "success", {
                     button: "That's Great"
                 });
             }
             const chatId = chatroom.id;
 
-            location.href = `chat.html?id=${chatId}`;
+            location.href = `chat.html?id=${chatId}&sellerId=${Ad_seller_id}`;
+           
         }
 
     </script>

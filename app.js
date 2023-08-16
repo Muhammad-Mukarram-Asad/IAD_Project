@@ -15,7 +15,8 @@ import {
   where,
   getDoc,
   onSnapshot,
-  orderBy
+  orderBy,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.11.0/firebase-firestore.js";
 
 import {
@@ -132,7 +133,8 @@ function getFirebaseAd(id) {
 // };
 
 async function checkChatroom(adUserId) {
-  const currentUserId = auth.currentUser.uid
+  const currentUserId = auth.currentUser.uid;
+  
   const q = query(collection(db, "chatrooms"),
       where(`users.${currentUserId}`, "==", true),
       where(`users.${adUserId}`, "==", true))
@@ -153,24 +155,27 @@ async function checkChatroom(adUserId) {
 const today_date = new Date();
 
 function createChatroom(adUserId, adSellerEmail) {
-  const currentUserId = auth.currentUser.uid
+
+  const currentUserId = auth.currentUser.uid;
+  const timestamp = serverTimestamp(); 
   console.log(` At Creating Chatroom: \n 
-  The current_User_Id is --> ${currentUserId} and 
-  \n  Ad_Seller_Id is --> ${adUserId}`);
+  The current_User_Id(buyer) is --> ${currentUserId} and 
+  \n  Seller_Id(seller) is --> ${adUserId}`);
   
 
   const obj =  {
       users: { 
-          [`Current_User_Id ${currentUserId}`]: true, // dynamic object keys [key_name];
-          [`Ad_User_Id ${adUserId} `]: true 
+          [`Buyer_Id-->${currentUserId}`]: true, // dynamic object keys [key_name];
+          [`Seller_Id-->${adUserId} `]: true 
       },
       user_Names:{
         Current_User_Email: auth.currentUser.email,
         Ad_Owner_Email: adSellerEmail
       },
-      createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`,
-      lastMessage:{}
-  } 
+      createdAt:  timestamp // Use the server-generated timestamp
+      
+      // createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`;
+    } 
   return addDoc(collection(db, "chatrooms"), obj)
 }
 
@@ -179,9 +184,11 @@ function createChatroom(adUserId, adSellerEmail) {
 function sendMessageToDb(text,chat_id)
 {
   const message = {text,
-    createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`,
-    userId:auth.currentUser.uid };
-  // const messageRef = db.collection("chatrooms").doc(chat_id).collection("messages").add(message);
+    createdAt:  timestamp, // Use the server-generated timestamp
+    userId: auth.currentUser.uid };
+    
+    // createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`,
+    // const messageRef = db.collection("chatrooms").doc(chat_id).collection("messages").add(message);
   // return messageRef;
 
   return addDoc(collection(db,"chatrooms", chat_id, "messages"), message);

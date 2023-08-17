@@ -72,10 +72,12 @@
 
         function getChatRoomId() {
             const urlParams = new URLSearchParams(window.location.search);
+            console.log("URL Parameters:", window.location.search);
+
             const chat_id = urlParams.get('id');
-            const sellerId = urlParams.get('sellerId');
+            // const sellerId = urlParams.get('sellerId');
             console.log("chat_id which comes from URLParams --> ", chat_id);
-            console.log("sellerId which comes from URLParams --> ", sellerId);
+            // console.log("sellerId which comes from URLParams --> ", sellerId);
             
             chatroom_id = chat_id;
             seller_Global_Id = sellerId;

@@ -132,41 +132,49 @@ function getFirebaseAd(id) {
 // return ad_array;
 // };
 
-async function checkChatroom(adUserId) {
+async function checkChatroom(AdSellerId) {
   const currentUserId = auth.currentUser.uid;
   
   const q = query(collection(db, "chatrooms"),
       where(`users.${currentUserId}`, "==", true),
-      where(`users.${adUserId}`, "==", true))
+      where(`users.${AdSellerId}`, "==", true))
 
   const querySnapshot = await getDocs(q);
-  console.log(` At Checking Chatroom:
+
+  console.log("querySnapshot: ", querySnapshot);
+
+  console.log(` At Checking Chatroom: \n
   The current_User_Id is =${currentUserId} & \n 
-  Ad_Seller_Id is =${adUserId}`);
+  Ad_Seller_Id is =${AdSellerId}`);
 
   let room;
   querySnapshot.forEach((doc) => {
       console.log(doc.id, " => ", doc.data());
       room = { id: doc.id, ...doc.data() }
   })
-  return room
+
+  console.log("The data in the room = ", room);
+  return room;
 }
 
-const today_date = new Date();
+// const today_date = new Date();
 
-function createChatroom(adUserId, adSellerEmail) {
+function createChatroom(AdSellerId, adSellerEmail) {
 
   const currentUserId = auth.currentUser.uid;
   const timestamp = serverTimestamp(); 
+
   console.log(` At Creating Chatroom: \n 
-  The current_User_Id(buyer) is --> ${currentUserId} and 
-  \n  Seller_Id(seller) is --> ${adUserId}`);
+  The current_User_Id(buyer) is --> ${currentUserId} and \n
+  Seller_Id(seller) is --> ${AdSellerId}`);
   
 
   const obj =  {
       users: { 
-          [`Buyer_Id-->${currentUserId}`]: true, // dynamic object keys [key_name];
-          [`Seller_Id-->${adUserId} `]: true 
+       // dynamic object keys [key_name];
+
+          [`${currentUserId}`]: true, // Buyer_Id 
+          [`${AdSellerId} `]: true    // Seller _Id
       },
       user_Names:{
         Current_User_Email: auth.currentUser.email,

@@ -16,8 +16,8 @@
     <section class="container">
         <div class="heading_div">
             <a href="index.html">
-            <img src="https://www.svgrepo.com/show/238568/back-arrow-previous.svg" alt="back_arrow" />
-        </a>
+                <img src="https://www.svgrepo.com/show/238568/back-arrow-previous.svg" alt="back_arrow" />
+            </a>
             <h1> Product Details:</h1>
             <img id="forward_icon"
                 src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3204758/arrow-forward-circle-icon-md.png"
@@ -39,24 +39,24 @@
 
 
     <script type="module">
-        import {auth, checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
+        import { auth, checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
 
         let data;
         let Ad_seller_id;
         let Ad_seller_email;
-        
+
 
         window.getAdDetails = async function () {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id')
 
             //getFirebaseAd(id)
-            console.log('ad id ===>', id)
-            const doc = await getFirebaseAd(id)
+            console.log(' Product Ad id ===>', id)
+            const doc = await getFirebaseAd(id);
             data = doc.data()
             Ad_seller_id = data.userId;
             Ad_seller_email = data.userEmail;
-            
+
             var div = document.getElementById('creative_div');
 
             div.innerHTML += `<div id="inner_div">
@@ -88,7 +88,7 @@
 
 
                 </div>`
-    }
+        }
 
         window.remove_login = function () {
             let login_container = document.getElementById("inner_div");
@@ -98,26 +98,47 @@
         // Function for creating room for chatting b/w seller and the buyer.
 
         window.initiateChat = async function () {
-            console.log('Ad_Seller_Id ===>', Ad_seller_id)
+            console.log('Ad_Seller_Id in details page  ===>', Ad_seller_id);
+
             //1. check if chatroom exists
-            let chatroom = await checkChatroom(Ad_seller_id)
+            let chatroom = await checkChatroom(Ad_seller_id);
+            console.log("chatroom variable =", chatroom);
 
             //2. if not exists then create it
-            if (!chatroom) {
-                chatroom = await createChatroom(Ad_seller_id, Ad_seller_email)
-                swal("Finally Done", "Chatroom created successfully", "success", {
-                    button: "Aww Yiss"
-                });
+            if (!chatroom) 
+            {
+                chatroom = await createChatroom(Ad_seller_id, Ad_seller_email);
+                swal({
+                    title: "Done!!!",
+                    text: "Chatroom created successfully",
+                    icon: "success",
+                    button: "Good to see this"
+                })
             }
+
             else {
-                swal("Wao", "Chatroom already exists", "success", {
+
+                swal({
+                    title: "Nice",
+                    text: "Chatroom already exist B/W Seller & Buyer",
+                    icon: "success",
                     button: "That's Great"
-                });
+                })
             }
+
             const chatId = chatroom.id;
 
-            location.href = `chat.html?id=${chatId}&sellerId=${Ad_seller_id}`;
-           
+            location.href = `chat.html?id=${chatId}`;
+
+            // const params = new URLSearchParams();
+            // params.append('id', chatId);
+            // params.append('sellerId', Ad_seller_id);
+
+            // const url = new URL('chat.html', window.location.href);
+            // url.search = params.toString();
+            // location.href = url.href;
+
+
         }
 
     </script>

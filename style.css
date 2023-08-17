@@ -913,8 +913,8 @@ footer {
 }
 
 .heart_image{
-  width: 40px;
-  height: 40px;
+  width: 3vw;
+  height: 5vh;
   mix-blend-mode: color-burn;
   cursor: pointer;
 }

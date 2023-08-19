@@ -34,7 +34,34 @@
   }
 
   /*________________ <section> Number: 02, 03, 04 css starts from here onwards___________________ */
+  #login_2_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 95vw;
+    height: 55vh;
+    position: relative;
+    padding-top: 0;
+    margin: 3vh auto;
+  }
 
+  #cross_sign_2 {
+    position: absolute;
+    margin-left: 78vw;
+    margin-top: -2vh;
+  }
+
+  .google{
+    width: 88vw;
+    height: 12vh;
+    margin-top: 8vh;
+    margin-left: 3%;
+  }
+
+  .google > input{
+    font-size: 16px;
+  }
 
   .sec-3,
   #sec-4 {
@@ -356,7 +383,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 50vh;
     width: 100vw;
     height: 80vh;
   }

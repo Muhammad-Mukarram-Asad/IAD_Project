@@ -117,6 +117,15 @@ function getFirebaseAd(id) {
   return getDoc(docRef)
 }
 
+
+// getting the active user Credential 
+
+async function getActiveUser(userId) {
+  const docRef = doc(db, "users", userId);
+  const logedUser = await getDoc(docRef);
+  return logedUser.data();
+}
+
 // Creating a method or function for obtaining Ad details when user clicked on it.
 // async function clickedAdFromDB(title)
 // {
@@ -135,13 +144,11 @@ function getFirebaseAd(id) {
 async function checkChatroom(AdSellerId) {
   const currentUserId = auth.currentUser.uid;
   
-  const q = query(collection(db, "chatrooms"),
-      where(`users.${currentUserId}`, "==", true),
-      where(`users.${AdSellerId}`, "==", true))
+  const q = await query(collection(db, "chatrooms"),
+      where(`users.CurrentUserId-->${currentUserId}`, "==", true),
+      where(`users.SellerId-->${AdSellerId}`, "==", true))
 
   const querySnapshot = await getDocs(q);
-
-  console.log("querySnapshot: ", querySnapshot);
 
   console.log(` At Checking Chatroom: \n
   The current_User_Id is =${currentUserId} & \n 
@@ -157,32 +164,39 @@ async function checkChatroom(AdSellerId) {
   return room;
 }
 
-// const today_date = new Date();
+const today_date = new Date();
 
-function createChatroom(AdSellerId, adSellerEmail) {
+async function createChatroom(AdSellerId) {
 
   const currentUserId = auth.currentUser.uid;
-  const timestamp = serverTimestamp(); 
+  // const timestamp = serverTimestamp(); 
 
   console.log(` At Creating Chatroom: \n 
   The current_User_Id(buyer) is --> ${currentUserId} and \n
   Seller_Id(seller) is --> ${AdSellerId}`);
   
+  const user1 = await getActiveUser(AdSellerId);
+  const user2 = await getActiveUser(currentUserId);
 
   const obj =  {
       users: { 
        // dynamic object keys [key_name];
 
-          [`${currentUserId}`]: true, // Buyer_Id 
-          [`${AdSellerId} `]: true    // Seller _Id
+          [`CurrentUserId-->${currentUserId}`]: true, // Buyer_Id 
+          [`SellerId-->${AdSellerId} `]: true,    // Seller _Id
+        },
+      users_Names:{
+        SellerName: user1.name,
+        CurrentUserName: user2.name
       },
-      user_Names:{
-        Current_User_Email: auth.currentUser.email,
-        Ad_Owner_Email: adSellerEmail
+
+      users_Emails: {
+        SellerEmail: user1.email,
+        CurrentUserEmail: user2.email
       },
-      createdAt:  timestamp // Use the server-generated timestamp
-      
-      // createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`;
+
+     // createdAt:  timestamp // Use the server-generated timestamp
+      createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`
     } 
   return addDoc(collection(db, "chatrooms"), obj)
 }
@@ -191,15 +205,19 @@ function createChatroom(AdSellerId, adSellerEmail) {
 // Now addig messages to the chatrooms:
 function sendMessageToDb(text,chat_id)
 {
-  const message = {text,
-    createdAt:  timestamp, // Use the server-generated timestamp
-    userId: auth.currentUser.uid };
+  const timestamp = serverTimestamp(); 
+  let messageId = chat_id + Date.now();
+  const message = {
+    text, 
+    createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`,
+    userId: auth.currentUser.uid 
+  };
     
     // createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`,
     // const messageRef = db.collection("chatrooms").doc(chat_id).collection("messages").add(message);
   // return messageRef;
-
-  return addDoc(collection(db,"chatrooms", chat_id, "messages"), message);
+  // return addDoc(collection(db,"chatrooms", chat_id, "messages"), message);
+     return setDoc(doc(db, "chatrooms", `${chat_id}`, "messages", `${messageId}`), message);
 }
 
 // async function getMessagesFromDb(chat_id)

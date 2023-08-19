@@ -39,7 +39,10 @@
 
 
     <script type="module">
-        import { auth, checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
+        import { checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
+        import {getAuth} from "https://www.gstatic.com/firebasejs/9.11.0/firebase-auth.js";
+        const auth = getAuth();
+
 
         let data;
         let Ad_seller_id;
@@ -102,33 +105,47 @@
 
             //1. check if chatroom exists
             let chatroom = await checkChatroom(Ad_seller_id);
+            let currentUserId = auth.currentUser.uid;
+
             console.log("chatroom variable =", chatroom);
 
             //2. if not exists then create it
-            if (!chatroom) 
-            {
-                chatroom = await createChatroom(Ad_seller_id, Ad_seller_email);
+
+            if (Ad_seller_id == currentUserId) {
                 swal({
-                    title: "Done!!!",
-                    text: "Chatroom created successfully",
+                    title: "It Seems Like",
+                    text: "It's Your own Post",
                     icon: "success",
-                    button: "Good to see this"
+                    button: "Okay"
                 })
             }
 
             else {
+                if (!chatroom) {
+                    chatroom = await createChatroom(Ad_seller_id);
+                    swal({
+                        title: "Done!!!",
+                        text: "Chatroom created successfully",
+                        icon: "success",
+                        button: "Good to see this",
+                    })
+                }
 
-                swal({
-                    title: "Nice",
-                    text: "Chatroom already exist B/W Seller & Buyer",
-                    icon: "success",
-                    button: "That's Great"
-                })
+                else {
+                    swal({
+                        title: "Nice",
+                        text: "Chatroom already exist B/W Seller & Buyer",
+                        icon: "success",
+                        button: "That's Great"
+                    })
+                }
             }
 
             const chatId = chatroom.id;
 
-            location.href = `chat.html?id=${chatId}`;
+           
+            window.location.href = `chat.html?id=${chatId}`;
+          
 
             // const params = new URLSearchParams();
             // params.append('id', chatId);

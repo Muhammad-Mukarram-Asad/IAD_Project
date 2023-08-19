@@ -449,11 +449,11 @@ footer {
 }
 
 #para-heart-box1 > img {
-  width: 5vw;
-  height: 7vh;
-  mix-blend-mode: color-burn;
-  background-color: white;
-  margin-top: 5px;
+    width: 3vw;
+    height: 5vh;
+    mix-blend-mode: color-burn;
+    background-color: white;
+    margin-top: 10px;
 }
 
 #para-heart-box2 p {

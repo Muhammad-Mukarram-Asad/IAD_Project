@@ -48,7 +48,7 @@
 
 #msg_text {
     color: black;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 
@@ -59,28 +59,24 @@ a {
 #message_div {
     display: block;
     width: 100vw;
-    height: 100vh;
-    /* background-image: url("https://pbs.twimg.com/media/C95w6LCXkAA65Ws.jpg"); */
+    height:  max-content;
     background-image: url("https://wallpapercave.com/wp/wp6559609.jpg");
-
 }
 
 
 .message-buyer {
     display: grid;
-    margin: 15px 70% 10px 18px;
+    margin: 10px 8vw 10px 1%;
     position: relative;
     float: left;
     padding: 9px;
-    /* background-color: #075e54; */
-    background-color: lightgreen;
-    max-width: 50%;
+    background-color: #075e54;
     word-wrap: break-word;
     text-align: left;
-    width: 5vw;
-    height: fit-content;
-    font: 400 0.9em "Open Sans", sans-serif;
-    border-radius: 10px;
+    max-width: 50%;
+    word-wrap: break-word;
+    width: max-content;
+    height: max-content;
 }
 
 .message-buyer:after {
@@ -97,7 +93,7 @@ a {
 
 .message-seller {
     display: grid;
-    margin: 10px 8vw 10px 67%;
+    margin: 10px 1vw 10px 67%;
     position: relative;
     float: right;
     padding: 9px;
@@ -107,7 +103,7 @@ a {
     word-wrap: break-word;
     width: max-content;
     height: max-content;
-    text-align: left;
+    text-align: right;
     font: 400 0.9em "Open Sans", sans-serif;
     border-radius: 10px;
 }

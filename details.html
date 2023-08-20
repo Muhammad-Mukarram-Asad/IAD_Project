@@ -40,12 +40,11 @@
 
     <script type="module">
         import { checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
-        import {getAuth} from "https://www.gstatic.com/firebasejs/9.11.0/firebase-auth.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.11.0/firebase-auth.js";
         const auth = getAuth();
 
 
         let data;
-        let Ad_seller_id;
         let Ad_seller_email;
 
 
@@ -57,7 +56,6 @@
             console.log(' Product Ad id ===>', id)
             const doc = await getFirebaseAd(id);
             data = doc.data()
-            Ad_seller_id = data.userId;
             Ad_seller_email = data.userEmail;
 
             var div = document.getElementById('creative_div');
@@ -65,31 +63,29 @@
             div.innerHTML += `<div id="inner_div">
                 <img onclick="remove_login()" id="cross_sign_2" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8KRxxoOlx_uDpp97M_ZwdyyEvW0rk1VdLv-MwwSY&s" alt="cross_img">
 
-                <label>The image of the Ad is given below: </label>
+                <label> High Quality Product Image: </label>
                 <img id="inner_div_img" src=${data.imageURL}>
 
-                <label>The Title of the Ad is given below: </label>
+                <label> Product Title: </label>
                 <p id="inner_div_p">${data.title}</p>
 
-                <label>The Description of the Ad is given below: </label>
+                <label> Product Description: </label>
                 <p id="inner_div_p">${data.description}</p>
 
-                <label>The Price of the Ad is given below: </label>
+                <label> Product Price: </label>
                 <p id="inner_div_p">${data.price}</p>
 
-                <label>The location of the Ad is given below: </label>
+                <label> Seller Location: </label>
                 <p id="inner_div_p">${data.location}</p>
 
-                <label>Owner's contact number is given below: </label>
+                <label> Seller's Contact Number: </label>
                 <p id="inner_div_p">${data.contact_number}</p>
 
-                <label>Owner's Id is given below: </label>
+                <label>  Seller's Id is given below: </label>
                 <p id="inner_div_p">${data.userId}</p>
 
-                <label>Owner's Email is given below: </label>
+                <label> Seller's Email is given below: </label>
                 <p id="inner_div_p">${data.userEmail}</p>
-
-
                 </div>`
         }
 
@@ -99,30 +95,26 @@
         };
 
         // Function for creating room for chatting b/w seller and the buyer.
-
         window.initiateChat = async function () {
-            console.log('Ad_Seller_Id in details page  ===>', Ad_seller_id);
+            console.log('Ad_Seller_Id in details page  ===>', data.userId);
+
+            let sellerId = data.userId;
+            let logedUserId = auth.currentUser.uid;
 
             //1. check if chatroom exists
-            let chatroom = await checkChatroom(Ad_seller_id);
-            let currentUserId = auth.currentUser.uid;
 
-            console.log("chatroom variable =", chatroom);
+            let chatroom = await checkChatroom(sellerId);
+
+            console.log("chatroom check status =", chatroom);
 
             //2. if not exists then create it
 
-            if (Ad_seller_id == currentUserId) {
-                swal({
-                    title: "It Seems Like",
-                    text: "It's Your own Post",
-                    icon: "success",
-                    button: "Okay"
-                })
+            if (sellerId == logedUserId) {
+                alert("It's Your Own Post");
             }
-
             else {
                 if (!chatroom) {
-                    chatroom = await createChatroom(Ad_seller_id);
+                    chatroom = await createChatroom(sellerId);
                     swal({
                         title: "Done!!!",
                         text: "Chatroom created successfully",
@@ -140,12 +132,9 @@
                     })
                 }
             }
-
             const chatId = chatroom.id;
-
-           
             window.location.href = `chat.html?id=${chatId}`;
-          
+        }
 
             // const params = new URLSearchParams();
             // params.append('id', chatId);
@@ -156,7 +145,7 @@
             // location.href = url.href;
 
 
-        }
+
 
     </script>
 

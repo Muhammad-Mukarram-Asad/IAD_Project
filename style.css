@@ -379,12 +379,12 @@ footer {
   height: auto;
 }
 
-.sec-5-h2 {
-  font-size: 20px;
-  margin: 5vh 3vw;
+.sec5_heading > h2 {
   font-family: "Sofia", sans-serif;
-  line-height: 31px;
-  font-weight: normal;
+  font-size: 30px;
+  text-shadow: 3px 3px 3px #ababab;
+  margin: 5vh 3vw;
+  font-weight: bold;
 }
 
 .sec5-box {

@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olx Clone</title>
+    <title>SAM Market</title>
+    <link rel="icon" type="image/x-icon" href="SAM_Logo.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -110,9 +112,6 @@
             <img src="https://www.olx.com.pk/assets/iconMailLogin_noinline.248b2cbda65d833f5f8f87f18a346cc9.svg"
                 alt="email_icon">
             <input id="email" type="email" placeholder="Enter your email here">
-
-
-
         </div>
         <p id="error" style="color:red;"></p>
 
@@ -128,7 +127,6 @@
         <div class="google">
             <img src="https://t3.ftcdn.net/jpg/03/21/61/42/360_F_321614224_NMuWh1gWDcCpFdSOLr7n511Q4HP97yAK.jpg" alt="">
             <input id="age" type="number" placeholder="Enter your age here">
-
         </div>
         <p id="error" style="color:red;"></p>
 
@@ -139,7 +137,6 @@
     </div>
 
     <!-- LogIn Form Ka Div hai neechay -->
-
     <div id="login_2_div" style="display: none;">
         <img onclick="remove_login()" id="cross_sign_2"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8KRxxoOlx_uDpp97M_ZwdyyEvW0rk1VdLv-MwwSY&s"
@@ -164,7 +161,6 @@
     </div>
 
 
-
     <section class="sec-3">
         <div id="sec3-H3">
             <h3>ALL CATEGORIES </h3>
@@ -185,11 +181,11 @@
 
     <section id="sec-4"> </section>
 
-    <div class="sec-5-h2">
-        <h2 class="font-effect-fire"> Fresh Recommendations</h2>
+    <div class="sec5_heading">
+        <h2> Fresh Recommendations</h2>
     </div>
 
-    <!-- There are two hard coded sections with the same name whose name is sec5  -->
+    <!-- There are two hard coded sections with the same name which is sec5  -->
     <section class="sec-5">
 
         <div class="sec5-box">
@@ -314,7 +310,7 @@
                 alt="">
 
             <div>
-                <label class="Ad_form_label" for="title">Enter your Product Title:</label>
+                <label class="Ad_form_label" for="title">Write your Product Title:</label>
                 <input type="text" id="title" placeholder="Title...">
             </div>
 
@@ -324,12 +320,12 @@
             </div>
 
             <div>
-                <label class="Ad_form_label" for="price">Enter your Product Price:</label>
+                <label class="Ad_form_label" for="price">Enter Product Price:</label>
                 <input type="number" id="price" placeholder="Price...">
             </div>
 
             <div>
-                <label class="Ad_form_label" for="location">Enter your Current Location:</label>
+                <label class="Ad_form_label" for="location">Enter your City Name:</label>
                 <input type="text" id="location" placeholder="Location...">
             </div>
 
@@ -339,7 +335,7 @@
             </div>
 
             <div>
-                <label class="Ad_form_label" for="description">Enter your Product Description:</label>
+                <label class="Ad_form_label" for="description">Write your Product Description:</label>
                 <textarea id="description" cols="35" rows="4" placeholder="Description..."></textarea>
             </div>
 

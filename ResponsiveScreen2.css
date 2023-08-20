@@ -30,6 +30,43 @@
 
   /*________________ <section> Number: 02, 03, 04 css starts from here onwards___________________ */
 
+/*__________________________SignUp Form Div CSS Below:____________________________________ */
+#login_form {
+  width: 90vw;
+  height: 70vh;
+  margin-left: 5vw;
+  margin-top: 3vh;
+  position: sticky;
+}
+#login_form > h1 {
+  font-size: 20px;
+  margin-top: 2vh;
+}
+#login_form > h3 {
+  margin-top: 3vh;
+}
+
+#login_form > p {
+  font-size: 14px;
+  margin-top: 3vh;
+}
+
+#cross_sign {
+  position: absolute;
+  margin-left: 75vw;
+  margin-top: -2vh;
+  width: 60px;
+  height: 60px;
+  mix-blend-mode: multiply;
+}
+
+#ending_paragraph {
+  margin-top: 3vh;
+  font-size: 14px;
+}
+
+/*__________________________LogIn Div CSS Below:______________________________________ */
+
   #login_2_div {
     display: flex;
     flex-direction: column;
@@ -248,7 +285,7 @@
     justify-content: flex-start;
     align-items: center;
     width: 95vw;
-    height: 70vh;
+    height: 130vh;
     margin: 5px auto;
     border: none;
   }
@@ -384,7 +421,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 50vh;
+    margin-top: 10vh;
     width: 100vw;
     height: 80vh;
   }
@@ -500,4 +537,10 @@
   .fa-square-heart {
     font-size: 20px;
   }
+
+  .heart_image {
+    width: 10vw;
+    height: 6vh;
+  }
+
 }

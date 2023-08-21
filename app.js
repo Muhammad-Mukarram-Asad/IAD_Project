@@ -11,6 +11,8 @@ import {
   doc,
   setDoc,
   getDocs,
+  updateDoc,
+  deleteDoc,
   query, 
   where,
   getDoc,
@@ -117,6 +119,13 @@ function getFirebaseAd(id) {
   return getDoc(docRef)
 }
 
+// Method For Updating Product Ads:
+
+function deleteAds(Product_Ad_id)
+{
+  deleteDoc(doc(db, "ads", Product_Ad_id));
+}
+
 
 // getting the active user Credential 
 
@@ -126,13 +135,11 @@ async function getActiveUser(userId) {
   return logedUser.data();
 }
 
-// Creating a method or function for obtaining Ad details when user clicked on it.
+//  Creating a method or function for obtaining Ad details when user clicked on it
 
-// async function clickedAdFromDB(title)
+//  async function clickedAdFromDB(title)
 // {
-  
 // const q = query(collection(db, "ads"), where("title", "==", title));
-
 // const querySnapshot = await getDocs(q);
 // let ad_array = [];
 // querySnapshot.forEach((doc) => {
@@ -186,6 +193,7 @@ async function checkChatroom(sellerId) {
 
 const today_date = new Date();
 
+// Creating the Chatroom B/W Seller & Buyer:
 async function createChatroom(sellerId){
 
   let userId = auth.currentUser.uid;
@@ -200,8 +208,10 @@ async function createChatroom(sellerId){
       user1Name : user1.name,
       user2Name : user2.name
     },
+    
+    createdAt:`${today_date.getHours()}:${today_date.getMinutes()}: ${today_date.getSeconds()}`
 
-    createdAt: Date.now()
+    // createdAt: Date.now()
   }
 
   return addDoc(collection(db, "chatroom"), obj);
@@ -300,7 +310,7 @@ console.log(`chat firebase.`);
 // }
 
 export {auth, signUpFirebase, signInFirebase, uploadImage, getAdsFromDb, postAdToDb,getRealtimeAds,
-  getFirebaseAd, createChatroom,checkChatroom,sendMessageToDb,getRealtimeMessages};
+  getFirebaseAd,deleteAds, createChatroom,checkChatroom,sendMessageToDb,getRealtimeMessages};
 
 
 

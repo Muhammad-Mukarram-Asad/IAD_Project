@@ -96,6 +96,33 @@
 
 }
 
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 90vw;
+    height: 10vh;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+#delete_btn{
+    width: 30vw;
+    height: 6vh;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+
+#edit_btn{
+    width: 30vw;
+    height: 6vh;
+    background-color: green;
+    color: white;
+    text-align: center;
+}
+
 #btn {
     display: flex;
     flex-direction: row;

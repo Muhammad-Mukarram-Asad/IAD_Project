@@ -39,13 +39,16 @@
 
 
     <script type="module">
-        import { checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
+        import {deleteAds, checkChatroom, createChatroom, getFirebaseAd } from "./app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/9.11.0/firebase-auth.js";
         const auth = getAuth();
-
-
+        
         let data;
         let Ad_seller_email;
+        let Product_Ad_id;
+
+        let sellerId;
+        let logedUserId;
 
 
         window.getAdDetails = async function () {
@@ -53,10 +56,13 @@
             const id = urlParams.get('id')
 
             //getFirebaseAd(id)
+
+            Product_Ad_id = id;
             console.log(' Product Ad id ===>', id)
             const doc = await getFirebaseAd(id);
             data = doc.data()
             Ad_seller_email = data.userEmail;
+            sellerId = data.userId;
 
             var div = document.getElementById('creative_div');
 
@@ -86,7 +92,38 @@
 
                 <label> Seller's Email is given below: </label>
                 <p id="inner_div_p">${data.userEmail}</p>
+
+                <div class="buttons">
+                    <button id="edit_btn"> Edit </button>
+                    <button onclick="deletePost()" id="delete_btn"> Delete </button>
+                </div>
                 </div>`
+        }
+
+      
+        
+        window.deletePost = function ()
+        {
+            if (sellerId == auth.currentUser.uid) {
+                deleteAds(Product_Ad_id);
+                swal({
+                    title: "Bravo!!!",
+                    text: "Post has been deleted.",
+                    icon: "success",
+                    button: "Okay"
+                })
+            }
+            else{
+                swal({
+                    title: "Oops",
+                    text: "You are not eligible to delete this post.",
+                    icon: "error",
+                    button: "Okay"
+                })
+            }
+
+            let remove_details = document.getElementById("creative_div");
+            remove_details.style.display = "none";
         }
 
         window.remove_login = function () {
@@ -98,10 +135,9 @@
         window.initiateChat = async function () {
             console.log('Ad_Seller_Id in details page  ===>', data.userId);
 
-            let sellerId = data.userId;
-            let logedUserId = auth.currentUser.uid;
-
             //1. check if chatroom exists
+
+            logedUserId = auth.currentUser.uid;
 
             let chatroom = await checkChatroom(sellerId);
 
